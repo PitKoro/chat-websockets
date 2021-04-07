@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+    <title>Чат с websockets</title>
+</head>
+<body>
+    <h1 id="user">Client1</h1>
+<form id="form">
+    <input id="client1" type="text" required></input>
+    <button type="submit">Send Msg</button>
+</form>
+    <div id="chat" style="overflow-y: scroll; width: 300px; height:200px; background-color: bisque; margin-top: 20px;"></div>
+</body>
+<script>
+
+    // Create WebSocket connection.
+    let socket = new WebSocket("ws://151.248.113.144:7501/");
+
+    // Connection opened
+    socket.onopen = function(event) {
+        console.log('Connected to the WS Server!')
+    };
+
+
+    // Connection closed
+    socket.addEventListener('close', function (event) {
+        console.log('Disconnected from the WS Server!')
+    });
+
+    // Listen for messages
+    socket.onmessage = function(event) {
+        let msgFromClient2 = event.data;
+
+        const div = document.createElement('div');
+        div.className = "message";
+        div.style.color = 'DarkGreen';
+        div.innerHTML="<p>client2:"+msgFromClient2+"</p>"
+
+        document.getElementById('chat').appendChild(div);
+        document.getElementById('chat').lastChild.scrollIntoView(false)
+
+        console.log('Message from server ', event.data);
+    };
+
+    // Send a msg to the websocket
+    $('#form').submit(function(e) {
+        e.preventDefault();
+        let msg = document.getElementById('client1').value;
+		
+        const div = document.createElement('div');
+        div.className = "message";
+        div.style.color = 'DarkBlue';
+        div.innerHTML="<p>client1:"+msg+"</p>"
+        document.getElementById('chat').appendChild(div);
+        document.getElementById('chat').lastChild.scrollIntoView(false)
+
+        socket.send(msg);
+		$('#client1').val('');
+        }
+    )
+    
+</script>
+</html>
