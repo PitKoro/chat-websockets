@@ -6,4 +6,4 @@
 2. Открыть в браузере `client.html` в двух вкладках и начать общение с самим собой
 ## Демо:
 1. Попросить меня запустить сервер
-2. Перейти по [ссылке](http://students.yss.su/PSTGU/2019/korolev/2021/chat/client.html)
+2. Перейти по [ссылке](http://students.yss.su/PSTGU/2019/korolev/2021/chat(client)/client.html)
